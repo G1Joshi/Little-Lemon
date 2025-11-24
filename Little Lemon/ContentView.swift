@@ -8,14 +8,28 @@
 import SwiftUI
 
 struct ContentView: View {
+    @StateObject var model = Model()
+    @State var tabSelection = 0
+
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        TabView(selection: $model.tabViewSelectedIndex) {
+            EmptyView()
+                .tag(0)
+                .tabItem {
+                    if !model.displayingReservationForm {
+                        Label("Locations", systemImage: "fork.knife")
+                    }
+                }
+
+            ReservationView()
+                .tag(1)
+                .tabItem {
+                    if !model.displayingReservationForm {
+                        Label("Reservation", systemImage: "square.and.pencil")
+                    }
+                }
         }
-        .padding()
+        .environmentObject(model)
     }
 }
 
