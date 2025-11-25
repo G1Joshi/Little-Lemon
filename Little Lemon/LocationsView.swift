@@ -12,19 +12,25 @@ struct LocationsView: View {
 
     var body: some View {
         VStack {
-            EmptyView()
+            LittleLemonLogo()
                 .padding(.top, 50)
 
-            EmptyView()
+            Text(model.displayingReservationForm ? "Reservation Details" : "Select a location")
                 .padding([.leading, .trailing], 40)
                 .padding([.top, .bottom], 8)
                 .background(Color.gray.opacity(0.2))
                 .cornerRadius(20)
 
             NavigationView {
-                EmptyView()
-                    .navigationBarTitle("")
-                    .navigationBarHidden(true)
+                List(model.restaurants, id: \.self) { restaurant in
+                    NavigationLink {
+                        ReservationForm(restaurant)
+                    } label: {
+                        RestaurantView(restaurant)
+                    }
+                }
+                .navigationBarTitle("")
+                .navigationBarHidden(true)
             }
         }
         .padding(.top, -10)

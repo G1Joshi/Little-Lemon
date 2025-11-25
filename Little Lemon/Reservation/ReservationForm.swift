@@ -42,6 +42,9 @@ struct ReservationForm: View {
                                   value: $party,
                                   formatter: NumberFormatter())
                             .keyboardType(.numberPad)
+                            .onChange(of: party) {
+                                if party < 1 { party = 1 }
+                            }
                     }
 
                     VStack {
@@ -91,7 +94,7 @@ struct ReservationForm: View {
                             .padding([.top, .bottom], 20)
                     }
 
-                    Button(action: {}, label: {
+                    Button(action: { validateForm() }, label: {
                         Text("CONFIRM RESERVATION")
                     })
                     .padding(.init(top: 10, leading: 30, bottom: 10, trailing: 30))
@@ -106,6 +109,9 @@ struct ReservationForm: View {
             .scrollContentBackground(.hidden)
             .onChange(of: mustChangeReservation) {
                 model.reservation = temporaryReservation
+            }
+            .alert(isPresented: $showFormInvalidMessage) {
+                .init(title: Text("Error"), message: Text(errorMessage))
             }
         }
         .onAppear {
