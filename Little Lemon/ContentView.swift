@@ -13,8 +13,16 @@ struct ContentView: View {
 
     var body: some View {
         TabView(selection: $model.tabViewSelectedIndex) {
-            LocationsView()
+            MenuItemsView()
                 .tag(0)
+                .tabItem {
+                    if !model.displayingReservationForm {
+                        Label("Menu", systemImage: "menucard")
+                    }
+                }
+
+            LocationsView()
+                .tag(1)
                 .tabItem {
                     if !model.displayingReservationForm {
                         Label("Locations", systemImage: "fork.knife")
@@ -22,7 +30,7 @@ struct ContentView: View {
                 }
 
             ReservationView()
-                .tag(1)
+                .tag(2)
                 .tabItem {
                     if !model.displayingReservationForm {
                         Label("Reservation", systemImage: "square.and.pencil")
