@@ -8,10 +8,11 @@
 import SwiftUI
 
 struct MenuItemsOptionView: View {
-    @ObservedObject var viewModel: MenuViewViewModel
+    var viewModel: MenuViewViewModel
     @Environment(\.dismiss) private var dismiss
 
     var body: some View {
+        @Bindable var viewModel = viewModel
         NavigationStack {
             Form {
                 Section {
@@ -43,7 +44,7 @@ struct MenuItemsOptionView: View {
             .navigationTitle("Menu Options")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
+                ToolbarItem(placement: .confirmationAction) {
                     Button("Done") {
                         dismiss()
                     }
@@ -80,24 +81,19 @@ struct CategoryToggleRow: View {
     }
 
     private var categoryIcon: String {
-        switch category {
-        case .food:
-            return "fork.knife"
-        case .drink:
-            return "cup.and.saucer.fill"
-        case .dessert:
-            return "birthday.cake.fill"
-        }
+        category.icon
     }
 
     private var categoryColor: Color {
         switch category {
-        case .food:
-            return .orange
-        case .drink:
-            return .blue
-        case .dessert:
-            return .pink
+        case .appetizers:
+            return LittleLemonTheme.primaryGreen
+        case .mains:
+            return LittleLemonTheme.charcoal
+        case .drinks:
+            return LittleLemonTheme.primaryYellow
+        case .desserts:
+            return LittleLemonTheme.highlightOrange
         }
     }
 }
@@ -130,8 +126,6 @@ struct SortOptionRow: View {
 
     private var optionIcon: String {
         switch option {
-        case .mostPopular:
-            return "flame.fill"
         case .price:
             return "dollarsign.circle"
         case .alphabetical:

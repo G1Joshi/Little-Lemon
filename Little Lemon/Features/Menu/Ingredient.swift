@@ -5,9 +5,9 @@
 //  Created by Jeevan Chandra Joshi on 25/12/25.
 //
 
-import Foundation
+import SwiftUI
 
-enum Ingredient: String, CaseIterable {
+enum Ingredient: String, CaseIterable, Codable {
     case spinach = "Spinach"
     case broccoli = "Broccoli"
     case carrot = "Carrot"
